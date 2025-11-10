@@ -1,14 +1,22 @@
-# 🧭 Traveling Salesman Problem Simulator
+# 🧭 Problema del Agente Viajero
 
-This project is an **interactive simulator** for the **Traveling Salesman Problem (TSP)** built with Python.  
-It allows you to generate graphs, view adjacency matrices, and visualize Hamiltonian cycles through an intuitive graphical interface made with **CustomTkinter**.
+
+Este proyecto es un simulador interactivo por el problema del viajero (TSP) hecho en Python 3.12. Genera grafos, graficas y visualización de matrices de adyacencia y rutas de ciclos hamiltoneanos con **CustomTkinter**
+
+---
+Integrantes: 
+
+- Asmat Alminco, Martín Alejandro
+- Barrientos Villalta, Vanessa Jazmin
+- Del Castillo Mendoza, Matias Javier
+- Gallardo Morales, Carla Alejandra
+- Ríos Hasegawa, Vivianne Fátima
 
 ---
 
 ## ⚙️ Installation
 
-First, make sure you have **Python 3.10+** installed.  
-Then, install the required dependencies by running the following command in your terminal:
-
+Primero, se tiene que tener instalado **Python 3.10+**.  
+Luego, se tienen que instalar las siguientes dependencias en la terminal donde se va a correr el proyecto Python.
 ```bash
 pip install matplotlib networkx customtkinter
