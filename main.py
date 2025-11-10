@@ -19,9 +19,10 @@ root.configure(fg_color="#f8f1e5")
 
 # ---------------- LÓGICA ----------------
 
-def generar_grafo_aleatorio(nodos, completo=True):
-    global grafo
-    grafo = nx.Graph()
+def generar_grafo_aleatorio(nodos, completo=True, grafo = None):
+    # global grafo
+    
+    if grafo is None: grafo = nx.Graph()
     adj = [[0]*nodos for _ in range(nodos)]
 
     if completo:
@@ -37,6 +38,58 @@ def generar_grafo_aleatorio(nodos, completo=True):
             grafo.add_edge(u, v, weight=peso)
             adj[u][v] = adj[v][u] = peso
     return adj
+
+def generar_grafo_manual(nodos, conexiones, grafo = None):
+
+    if grafo is None: grafo = nx.Graph()
+    adj = [[0]*nodos for _ in range(nodos)]  # matriz vacía
+
+    def agregar_conexion(i):
+        ventana = ctk.CTkToplevel(root)
+        ventana.title(f"Conexión {i+1}")
+        ventana.geometry("400x300")
+        ventana.configure(fg_color="#f8f1e5")
+
+        ctk.CTkLabel(ventana, text=f"Conexión #{i+1}", font=("Montserrat", 20, "bold"), text_color="#815c36").pack(pady=10)
+
+        entry_u = ctk.CTkEntry(ventana, placeholder_text="Nodo origen (u)", width=200)
+        entry_u.pack(pady=5)
+        entry_v = ctk.CTkEntry(ventana, placeholder_text="Nodo destino (v)", width=200)
+        entry_v.pack(pady=5)
+        entry_costo = ctk.CTkEntry(ventana, placeholder_text="Costo (peso)", width=200)
+        entry_costo.pack(pady=5)
+
+        def guardar_y_continuar():
+            try:
+                u = int(entry_u.get())
+                v = int(entry_v.get())
+                costo = int(entry_costo.get())
+                if u == v or u < 0 or v < 0 or u >= nodos or v >= nodos:
+                    messagebox.showerror("Error", "Nodos inválidos o repetidos.")
+                    return
+                grafo.add_edge(u, v, weight=costo)
+                adj[u][v] = adj[v][u] = costo
+
+                ventana.destroy()  # cerrar la actual
+                if i + 1 < conexiones:
+                    root.after(100, lambda: agregar_conexion(i + 1))  # abrir la siguiente
+                else:
+                    ciclos = buscar_ciclos_hamiltonianos(nodos, adj)
+                    if not ciclos:
+                        messagebox.showinfo("Resultado", "No se encontraron ciclos Hamiltonianos.")
+                    else:
+                        messagebox.showinfo("Resultado", f"Se encontraron {len(ciclos)} ciclos posibles.")
+            except ValueError:
+                messagebox.showerror("Error", "Por favor, ingrese valores válidos.")
+
+        ctk.CTkButton(ventana, text="Guardar", fg_color="#4b70ff", command=guardar_y_continuar).pack(pady=20)
+
+
+    agregar_conexion(0)
+
+    return adj
+
+
 
 def buscar_ciclos_hamiltonianos(nodos, adj):
     visited, ciclos = [0]*nodos, []
@@ -348,20 +401,50 @@ def abrir_creditos():
 
 def generar_grafo_ui():
     try:
-        nodos = int(ctk.CTkInputDialog(text="Ingrese cantidad de nodos (8–16):", title="Configuración").get_input())
+        global grafo
+        nodos = int(ctk.CTkInputDialog(
+            text="Ingrese cantidad de nodos (8–16):",
+            title="Configuración").get_input())
+        
         if nodos < 8 or nodos > 16:
             messagebox.showerror("Error", "El número de nodos debe estar entre 8 y 16.")
             return
-        tipo = messagebox.askyesno("Tipo de grafo", "¿Deseas un grafo completo aleatorio?\nSí = Completo / No = Parcial")
-        adj = generar_grafo_aleatorio(nodos, completo=tipo)
-        dibujar_grafo(grafo, "Grafo generado")
-        ciclos = buscar_ciclos_hamiltonianos(nodos, adj)
-        if not ciclos:
-            messagebox.showinfo("Resultado", "No se encontraron ciclos Hamiltonianos.")
+
+        # Preguntar si el grafo será automático o manual
+        opcion = messagebox.askyesno(
+            "Generación Automática (con valores random)",
+            "\nSí = Automática / No = Manual"
+        )
+
+        if opcion:
+            # Automático
+            tipo = messagebox.askyesno(
+                "Tipo de grafo",
+                "¿Deseas un grafo completo aleatorio?\nSí = Completo / No = Parcial"
+            )
+            adj = generar_grafo_aleatorio(nodos, completo=tipo)
+            dibujar_grafo(grafo, "Grafo generado automáticamente", grafo)
+            ciclos = buscar_ciclos_hamiltonianos(nodos, adj)
+
+            # Mostrar resultado
+            if not ciclos:
+                messagebox.showinfo("Resultado", "No se encontraron ciclos Hamiltonianos.")
+            else:
+                messagebox.showinfo("Resultado", f"Se encontraron {len(ciclos)} ciclos posibles.")
+
         else:
-            messagebox.showinfo("Resultado", f"Se encontraron {len(ciclos)} ciclos posibles.")
+            # Manual
+            conexiones = int(ctk.CTkInputDialog(
+                text="Ingrese cantidad de conexiones (desde 1 hasta n*(n-1)/2):",
+                title="Configuración de conexiones").get_input()
+            )
+
+            # 🔹 Llamamos a la función manual (no bloquea la interfaz)
+            generar_grafo_manual(nodos, conexiones, grafo)
+
     except Exception as e:
         messagebox.showerror("Error", f"Ocurrió un error: {e}")
+
 
 
 # ---------------- BOTONES PRINCIPALES ----------------

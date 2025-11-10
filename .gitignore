@@ -1,24 +1,18 @@
-# Entorno virtual
 .venv/
 venv/
 
-# Archivos de configuración o entorno
 .env
 *.env
 
-# Archivos temporales de Python
 __pycache__/
 *.py[cod]
 *.log
 
-# Configuración de VS Code
 .vscode/
 
-# Archivos del sistema
 .DS_Store
 Thumbs.db
 
-# Imágenes o archivos generados
 *.png
 *.jpg
 *.jpeg
