@@ -19,10 +19,9 @@ root.configure(fg_color="#f8f1e5")
 
 # ---------------- LÓGICA ----------------
 
-def generar_grafo_aleatorio(nodos, completo=True, grafo = None):
-    # global grafo
+def generar_grafo_aleatorio(nodos, completo=True):
+
     
-    if grafo is None: grafo = nx.Graph()
     adj = [[0]*nodos for _ in range(nodos)]
 
     if completo:
@@ -39,9 +38,8 @@ def generar_grafo_aleatorio(nodos, completo=True, grafo = None):
             adj[u][v] = adj[v][u] = peso
     return adj
 
-def generar_grafo_manual(nodos, conexiones, grafo = None):
+def generar_grafo_manual(nodos, conexiones):
 
-    if grafo is None: grafo = nx.Graph()
     adj = [[0]*nodos for _ in range(nodos)]  # matriz vacía
 
     def agregar_conexion(i):
@@ -423,7 +421,7 @@ def generar_grafo_ui():
                 "¿Deseas un grafo completo aleatorio?\nSí = Completo / No = Parcial"
             )
             adj = generar_grafo_aleatorio(nodos, completo=tipo)
-            dibujar_grafo(grafo, "Grafo generado automáticamente", grafo)
+            dibujar_grafo(grafo, "Grafo generado automáticamente")
             ciclos = buscar_ciclos_hamiltonianos(nodos, adj)
 
             # Mostrar resultado
@@ -440,7 +438,7 @@ def generar_grafo_ui():
             )
 
             # 🔹 Llamamos a la función manual (no bloquea la interfaz)
-            generar_grafo_manual(nodos, conexiones, grafo)
+            generar_grafo_manual(nodos, conexiones)
 
     except Exception as e:
         messagebox.showerror("Error", f"Ocurrió un error: {e}")
