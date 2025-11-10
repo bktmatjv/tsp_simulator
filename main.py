@@ -410,8 +410,8 @@ def generar_grafo_ui():
 
         # Preguntar si el grafo será automático o manual
         opcion = messagebox.askyesno(
-            "Generación Automática (con valores random)",
-            "\nSí = Automática / No = Manual"
+            "Generacion aleatoria (con random)", 
+            "¿Deseas generar el grafo de forma aleatoria?\nSí = Automática / No = Manual"
         )
 
         if opcion:
