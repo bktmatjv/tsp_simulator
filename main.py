@@ -237,40 +237,112 @@ def abrir_instrucciones():
     instrucciones.title("Instrucciones")
     instrucciones.geometry("800x500")
     instrucciones.configure(fg_color="#f8f1e5")
-    ctk.CTkLabel(instrucciones, text="📑 Instrucciones", font=("Montserrat", 36, "bold"), text_color="#815c36").place(relx=0.5, rely=0.15, anchor=CENTER)
+
+    # Título
+    ctk.CTkLabel(
+        instrucciones,
+        text="📑 Instrucciones",
+        font=("Montserrat", 36, "bold"),
+        text_color="#815c36"
+    ).place(relx=0.5, rely=0.15, anchor=CENTER)
+
+    # Textito
     texto = (
         "¡¡Bienvenido al programa del Agente Viajero!!\n\n"
-        "1. Presiona [Generar grafo] para crear un grafo.\n"
-        "2. Luego presiona [Buscar ciclo más óptimo].\n"
-        "3. Finalmente, visualiza el grafo con el camino óptimo.\n\n"
-        "Dato curioso: mientras más nodos tenga el grafo, mayor será el tiempo de búsqueda."
+        "Para usar el simulador, debes seguir los siguientes pasos:\n"
+        "1. Presiona [Empezar simulación] para generar un grafo.\n"
+        "2. Selecciona [Generar grafo] y elige si deseas un grafo aleatorio o manual.\n"
+        "3. Presiona [Mostrar grafo] para observar el grafo generado con sus respectivas relaciones.\n"
+        "4. A continuación, presiona [Buscar ciclo más óptimo] para ver los ciclos hamiltoneanos existentes y obtener el de menor costo.\n\n"
+        "Dato curioso: Mientras más nodos tenga el grafo, mayor será el tiempo de búsqueda."
     )
-    caja = ctk.CTkTextbox(instrucciones, width=600, height=280, fg_color="#ffffff", text_color="#7e5c38", font=("Montserrat", 18), corner_radius=20, wrap="word")
-    caja.place(relx=0.5, rely=0.5, anchor=CENTER)
-    caja.insert("0.0", texto)
-    caja.configure(state="disabled")
-    ctk.CTkButton(instrucciones, text="Volver", font=("Montserrat", 16, "bold"), fg_color="#afde72", text_color="white", command=instrucciones.destroy).place(relx=0.5, rely=0.88, anchor=CENTER)
+
+    ctk.CTkTextbox(
+        instrucciones,
+        width=600,
+        height=280,
+        fg_color="#ffffff",
+        text_color="#7e5c38",
+        font=("Montserrat", 18),
+        corner_radius=20,
+        wrap="word"
+    ).place(relx=0.5, rely=0.50, anchor=CENTER)
+
+    textbox = instrucciones.winfo_children()[-1]
+    textbox.insert("0.0", texto)
+    textbox.configure(state="disabled")
+
+    # Botón volver
+    ctk.CTkButton(
+        instrucciones,
+        text="Volver al menú",
+        font=("Montserrat", 16, "bold"),
+        fg_color="#afde72",
+        hover_color="#6688ff",
+        text_color="white",
+        width=200,
+        height=45,
+        corner_radius=50,
+        command=instrucciones.destroy
+    ).place(relx=0.5, rely=0.88, anchor=CENTER)
+
 
 def abrir_creditos():
     creditos = ctk.CTkToplevel(root)
     creditos.title("Créditos")
     creditos.geometry("800x500")
     creditos.configure(fg_color="#f8f1e5")
-    ctk.CTkLabel(creditos, text="🎓 Créditos", font=("Montserrat", 36, "bold"), text_color="#815c36").place(relx=0.5, rely=0.15, anchor=CENTER)
+
+    # Título
+    ctk.CTkLabel(
+        creditos,
+        text="🎓 Créditos",
+        font=("Montserrat", 36, "bold"),
+        text_color="#815c36"
+    ).place(relx=0.5, rely=0.15, anchor=CENTER)
+
+    # Textito
     texto = (
-        "\nProyecto de Matemática Computacional - UPC\n\n"
-        "Integrantes:\n"
-        "• Asmat Alminco, Martín Alejandro\n"
-        "• Barrientos Villalta, Vanessa Jazmín\n"
-        "• Del Castillo Mendoza, Matías Javier\n"
-        "• Gallardo Morales, Carla Alejandra\n"
-        "• Ríos Hasegawa, Vivianne Fátima\n"
+        "\n  Desarrollado para el curso de Matemática Computacional - 1AMA0475\n"
+        "                  ♨️Universidad Peruana de Ciencias Aplicadas           \n\n"
+        "       👥 Integrantes:\n"
+        "         • Asmat Alminco, Martín Alejandro\n"
+        "         • Barrientos Villalta, Vanessa Jazmín\n"
+        "         • Del Castillo Mendoza, Matías Javier\n"
+        "         • Gallardo Morales, Carla Alejandra\n"
+        "         • Ríos Hasegawa, Vivianne Fátima\n\n"
+        "                                                   2025-02                                 "
     )
-    caja = ctk.CTkTextbox(creditos, width=600, height=280, fg_color="#ffffff", text_color="#7e5c38", font=("Montserrat", 18), corner_radius=20, wrap="word")
-    caja.place(relx=0.5, rely=0.5, anchor=CENTER)
-    caja.insert("0.0", texto)
-    caja.configure(state="disabled")
-    ctk.CTkButton(creditos, text="Volver", font=("Montserrat", 16, "bold"), fg_color="#4b70ff", text_color="white", command=creditos.destroy).place(relx=0.5, rely=0.88, anchor=CENTER)
+
+    ctk.CTkTextbox(
+        creditos,
+        width=600,
+        height=280,
+        fg_color="#ffffff",
+        text_color="#7e5c38",
+        font=("Montserrat", 18),
+        corner_radius=20,
+        wrap="word"
+    ).place(relx=0.5, rely=0.50, anchor=CENTER)
+
+    textbox = creditos.winfo_children()[-1]
+    textbox.insert("0.0", texto)
+    textbox.configure(state="disabled")
+
+    # Botón volver
+    ctk.CTkButton(
+        creditos,
+        text="Volver al menú",
+        font=("Montserrat", 16, "bold"),
+        fg_color="#4b70ff",
+        hover_color="#6688ff",
+        text_color="white",
+        width=200,
+        height=45,
+        corner_radius=50,
+        command=creditos.destroy
+    ).place(relx=0.5, rely=0.88, anchor=CENTER)
+
 
 # ---------------- BOTONES PRINCIPALES ----------------
 
