@@ -76,7 +76,7 @@ def generar_grafo_manual(nodos, conexiones):
                     if not ciclos:
                         messagebox.showinfo("Resultado", "No se encontraron ciclos Hamiltonianos.")
                     else:
-                        messagebox.showinfo("Resultado", f"Se encontraron {len(ciclos)} ciclos posibles.")
+                        messagebox.showinfo("Resultado", f"Se encontraron {len(ciclos) // 2} ciclos posibles.")
             except ValueError:
                 messagebox.showerror("Error", "Por favor, ingrese valores válidos.")
 
@@ -428,7 +428,7 @@ def generar_grafo_ui():
             if not ciclos:
                 messagebox.showinfo("Resultado", "No se encontraron ciclos Hamiltonianos.")
             else:
-                messagebox.showinfo("Resultado", f"Se encontraron {len(ciclos)} ciclos posibles.")
+                messagebox.showinfo("Resultado", f"Se encontraron {len(ciclos) // 2} ciclos posibles.")
 
         else:
             # Manual
